@@ -1,14 +1,15 @@
+import 'package:deloitte/api_service.dart';
+import 'package:flutter/material.dart';
 import 'package:deloitte/widgets/button.dart';
 import 'package:deloitte/widgets/header.dart';
 import 'package:deloitte/widgets/no_account.dart';
 import 'package:deloitte/widgets/text_fields.dart';
 import 'package:deloitte/widgets/welcome.dart';
-import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<SignIn> createState() => _SignInState();
@@ -19,6 +20,28 @@ class _SignInState extends State<SignIn> {
   final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String errorMessage = '';
+
+  // Create an instance of the ApiService class
+  final ApiService apiService = ApiService();
+
+  // Function to handle the login action
+  Future<void> login() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        // Call the login method from the ApiService class
+        await apiService.login(
+          emailController.text.trim(),
+          passwordController.text.trim(),
+        );
+
+      } catch (e) {
+        // Handle login error
+        setState(() {
+          errorMessage = 'Failed to log in. Please check your credentials and try again.';
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +113,7 @@ class _SignInState extends State<SignIn> {
                   const SizedBox(height: 10.0),
                   Button(
                     label: "Log In",
-                    onTap: () {},
+                    onTap: login, 
                   ),
                   const SizedBox(height: 20.0),
                   NoAccount(
@@ -104,6 +127,14 @@ class _SignInState extends State<SignIn> {
                       // );
                     },
                   ),
+                  if (errorMessage.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Text(
+                        errorMessage,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    ),
                 ],
               ),
             ),
