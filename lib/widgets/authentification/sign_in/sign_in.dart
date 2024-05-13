@@ -4,7 +4,6 @@ import 'package:deloitte/widgets/button.dart';
 import 'package:deloitte/widgets/header.dart';
 import 'package:deloitte/widgets/no_account.dart';
 import 'package:deloitte/widgets/text_fields.dart';
-import 'package:deloitte/widgets/welcome.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({
@@ -33,7 +32,6 @@ class _SignInState extends State<SignIn> {
           emailController.text.trim(),
           passwordController.text.trim(),
         );
-
       } catch (e) {
         // Handle login error
         setState(() {
@@ -47,29 +45,6 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.green,
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-            ),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => const Welcome(),
-                ),
-              );
-            },
-          ),
-          title: const Row(
-            children: [
-              SizedBox(
-                width: 70,
-              ),
-              Text('LOG IN'),
-            ],
-          ),
-        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -113,7 +88,7 @@ class _SignInState extends State<SignIn> {
                   const SizedBox(height: 10.0),
                   Button(
                     label: "Log In",
-                    onTap: login, 
+                    onTap: login,
                   ),
                   const SizedBox(height: 20.0),
                   NoAccount(
