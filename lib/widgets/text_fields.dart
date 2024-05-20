@@ -33,12 +33,24 @@ class _TextFiledsState extends State<TextFileds> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
+          cursorColor: Colors.green,
           controller: widget.controller,
           obscureText: widget.obscure,
           decoration: InputDecoration(
             labelText: widget.label,
+            labelStyle: TextStyle(
+              color: Colors.black.withOpacity(0.5),
+            ),
+            fillColor: Colors.green,
             border: const OutlineInputBorder(),
             enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: const BorderSide(
+                color: Colors.green,
+                width: 2.0,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.0),
               borderSide: const BorderSide(
                 color: Colors.green,

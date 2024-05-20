@@ -11,10 +11,14 @@ class Header extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Image.asset(
-          'assets/DELWhite.jpg',
-          width: 300,
-          height: 120,
+        Row(
+          children: [
+            Image.asset(
+              'assets/DELWhite.jpg',
+              width: 300,
+              height: 120,
+            ),
+          ],
         ),
         const SizedBox(height: 30),
         Text(

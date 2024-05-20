@@ -8,7 +8,7 @@ class ApiService {
   Future<List<ApiModel>> getApi() async {
     List<ApiModel> personList = [];
     var path =
-        Uri.parse('$baseUrl/api_endpoint'); // Replace 'api_endpoint' with your API endpoint for fetching data
+        Uri.parse('$baseUrl/api_endpoint'); 
     var response = await http.get(path);
 
     if (response.statusCode == 200) {

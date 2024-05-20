@@ -1,29 +1,38 @@
 import 'package:deloitte/api_service.dart';
-import 'package:deloitte/widgets/authentification/sign_up/sign_up.dart';
-import 'package:flutter/material.dart';
+import 'package:deloitte/widgets/authentification/sign_in/sign_in.dart';
 import 'package:deloitte/widgets/button.dart';
 import 'package:deloitte/widgets/header.dart';
 import 'package:deloitte/widgets/no_account.dart';
 import 'package:deloitte/widgets/text_fields.dart';
+import 'package:flutter/material.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({
-    Key? key,
-  }) : super(key: key);
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
 
   @override
-  State<SignIn> createState() => _SignInState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _SignInState extends State<SignIn> {
+class _SignUpState extends State<SignUp> {
   final emailController = TextEditingController();
+  final userNameController = TextEditingController();
   final passwordController = TextEditingController();
+  final regNoController = TextEditingController();
+  final nameController = TextEditingController();
+  final mobileController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
+
   String errorMessage = '';
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _signUp();
+  }
 
   final ApiService apiService = ApiService();
 
-  Future<void> login() async {
+  Future<void> _signUp() async {
     if (_formKey.currentState!.validate()) {
       try {
         await apiService.login(
@@ -36,6 +45,17 @@ class _SignInState extends State<SignIn> {
         });
       }
     }
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    userNameController.dispose();
+    regNoController.dispose();
+    mobileController.dispose();
+    nameController.dispose();
+    super.dispose();
   }
 
   @override
@@ -52,12 +72,42 @@ class _SignInState extends State<SignIn> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   const Header(
-                    text: 'Please login in order to proceed',
+                    text: 'Please create your account in order to be able to benefit from our service!',
+                
                   ),
-                  const SizedBox(height: 50.0),
+                  const SizedBox(height: 20.0),
+
+                  TextFileds(
+                    controller: regNoController,
+                    label: 'RegNo',
+                    obscure: false,
+                    input: TextInputType.text,
+                    validate: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your RegNo';
+                      }
+                      return null;
+                    },
+                  ),
+
+                  const SizedBox(height: 10.0),
+                  TextFileds(
+                    controller: nameController,
+                    label: 'Name',
+                    obscure: false,
+                    input: TextInputType.text,
+                    validate: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your Name';
+                      }
+                      return null;
+                    },
+                  ),
+
+                  const SizedBox(height: 10.0),
                   TextFileds(
                     controller: emailController,
-                    label: "Email",
+                    label: 'Email',
                     obscure: false,
                     input: TextInputType.emailAddress,
                     validate: (value) {
@@ -69,10 +119,13 @@ class _SignInState extends State<SignIn> {
                       return null;
                     },
                   ),
+
                   const SizedBox(height: 10.0),
+
+                  /// TextField pour le mot de passe
                   TextFileds(
                     controller: passwordController,
-                    label: "Password",
+                    label: 'Password',
                     obscure: true,
                     input: TextInputType.visiblePassword,
                     validate: (value) {
@@ -85,30 +138,36 @@ class _SignInState extends State<SignIn> {
                     },
                   ),
                   const SizedBox(height: 10.0),
-                  Button(
-                    label: "Log In",
-                    onTap: login,
+                  TextFileds(
+                    controller: mobileController,
+                    label: 'Mobile Number',
+                    obscure: false,
+                    input: TextInputType.number,
+                    validate: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your Mobile Number';
+                      }
+                      return null;
+                    },
                   ),
+
                   const SizedBox(height: 20.0),
+                  Button(
+                    label: "Sign Up",
+                    onTap: _signUp,
+                  ),
+                  const SizedBox(height: 10.0),
                   NoAccount(
-                    text1: 'You don\'t have an account ? ',
-                    text2: "SignUp",
+                    text1: 'You  have an account ? ',
+                    text2: "LogIn",
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => const SignUp(),
+                          builder: (_) => const SignIn(),
                         ),
                       );
                     },
                   ),
-                  if (errorMessage.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Text(
-                        errorMessage,
-                        style: const TextStyle(color: Colors.red),
-                      ),
-                    ),
                 ],
               ),
             ),

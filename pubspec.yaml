@@ -29,4 +29,5 @@ flutter:
   assets:
     - assets/
     - assets/DELBlack.jpg
-    - assets\DELWhite.jpg
+    - assets/DELWhite.jpg
+    - assets/deloitte.jpg
