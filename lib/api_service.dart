@@ -7,8 +7,7 @@ class ApiService {
 
   Future<List<ApiModel>> getApi() async {
     List<ApiModel> personList = [];
-    var path =
-        Uri.parse('$baseUrl/api_endpoint'); 
+    var path = Uri.parse('$baseUrl/api');
     var response = await http.get(path);
 
     if (response.statusCode == 200) {
@@ -21,9 +20,9 @@ class ApiService {
     return personList;
   }
 
-  Future<Map<String, dynamic>> login(String email, String password) async {
+  Future<Map<String, dynamic>> login(String email, int regNo, String password) async {
     var path = Uri.parse('$baseUrl/api/login');
-    var response = await http.post(path, body: {'email': email, 'password': password});
+    var response = await http.post(path, body: {'email': email, 'regNo': regNo, 'password': password});
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);

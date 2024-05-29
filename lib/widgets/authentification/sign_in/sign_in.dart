@@ -18,6 +18,7 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final regNoController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String errorMessage = '';
 
@@ -28,6 +29,7 @@ class _SignInState extends State<SignIn> {
       try {
         await apiService.login(
           emailController.text.trim(),
+          regNoController.text.trim() as int,
           passwordController.text.trim(),
         );
       } catch (e) {
@@ -65,6 +67,19 @@ class _SignInState extends State<SignIn> {
                         return 'Please enter an email';
                       } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
                         return 'Enter a valid email address';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 10.0),
+                  TextFileds(
+                    controller: regNoController,
+                    label: "regNo",
+                    obscure: false,
+                    input: TextInputType.number,
+                    validate: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your Register Number';
                       }
                       return null;
                     },

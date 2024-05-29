@@ -34,16 +34,17 @@ class _SignUpState extends State<SignUp> {
 
   Future<void> _signUp() async {
     if (_formKey.currentState!.validate()) {
-      try {
-        await apiService.login(
-          emailController.text.trim(),
-          passwordController.text.trim(),
-        );
-      } catch (e) {
-        setState(() {
-          errorMessage = 'Failed to log in. Please check your credentials and try again.';
-        });
-      }
+      // try {
+      //   await apiService.create(
+      //     emailController.text.trim(),
+      //     regNoController.text.trim() as int,
+      //     passwordController.text.trim(),
+      //   );
+      // } catch (e) {
+      //   setState(() {
+      //     errorMessage = 'Failed to log in. Please check your credentials and try again.';
+      //   });
+      // }
     }
   }
 
@@ -73,7 +74,6 @@ class _SignUpState extends State<SignUp> {
                 children: <Widget>[
                   const Header(
                     text: 'Please create your account in order to be able to benefit from our service!',
-                
                   ),
                   const SizedBox(height: 20.0),
 
