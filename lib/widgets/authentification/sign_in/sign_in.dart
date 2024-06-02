@@ -26,14 +26,18 @@ class _SignInState extends State<SignIn> {
 
   Future<void> login() async {
     if (_formKey.currentState!.validate()) {
+   print("Form is valid");
       try {
         await apiService.login(
           emailController.text.trim(),
-          regNoController.text.trim() as int,
+          regNoController.text.trim(),
           passwordController.text.trim(),
         );
+          print("Login successful: $login");
       } catch (e) {
+        print("eroooooooooooooooor: $e");
         setState(() {
+ 
           errorMessage = 'Failed to log in. Please check your credentials and try again.';
         });
       }
@@ -76,7 +80,7 @@ class _SignInState extends State<SignIn> {
                     controller: regNoController,
                     label: "regNo",
                     obscure: false,
-                    input: TextInputType.number,
+                    input: TextInputType.name,
                     validate: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your Register Number';

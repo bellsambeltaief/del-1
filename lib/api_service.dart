@@ -3,7 +3,8 @@ import 'package:deloitte/models/api_model.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const String baseUrl = 'http://127.0.0.1:8000';
+  static const String baseUrl = 'http://192.168.111.1:8000';
+ 
 
   Future<List<ApiModel>> getApi() async {
     List<ApiModel> personList = [];
@@ -20,15 +21,20 @@ class ApiService {
     return personList;
   }
 
-  Future<Map<String, dynamic>> login(String email, int regNo, String password) async {
-    var path = Uri.parse('$baseUrl/api/login');
+Future<Map<String, dynamic>> login(String email, String regNo, String password) async {
+  try {
+    var path = Uri.parse('http://192.168.111.1:8000/authentification/api/login');
     var response = await http.post(path, body: {'email': email, 'regNo': regNo, 'password': password});
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       return data;
     } else {
-      throw Exception('Failed to log in');
+      throw Exception('Failed to log in: ${response.statusCode} - ${response.body}');
     }
+  } catch (e) {
+    print('Error: $e');
+    rethrow;
   }
+}
 }
