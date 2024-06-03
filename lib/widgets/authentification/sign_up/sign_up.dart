@@ -4,6 +4,7 @@ import 'package:deloitte/widgets/button.dart';
 import 'package:deloitte/widgets/header.dart';
 import 'package:deloitte/widgets/no_account.dart';
 import 'package:deloitte/widgets/text_fields.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -32,21 +33,36 @@ class _SignUpState extends State<SignUp> {
 
   final ApiService apiService = ApiService();
 
-  Future<void> _signUp() async {
-    if (_formKey.currentState!.validate()) {
-      // try {
-      //   await apiService.create(
-      //     emailController.text.trim(),
-      //     regNoController.text.trim() as int,
-      //     passwordController.text.trim(),
-      //   );
-      // } catch (e) {
-      //   setState(() {
-      //     errorMessage = 'Failed to log in. Please check your credentials and try again.';
-      //   });
-      // }
+ Future<void> _signUp() async {
+  if (_formKey.currentState!.validate()) {
+    try {
+      Map<String, dynamic> result = await apiService.create(
+        emailController.text.trim(),
+        regNoController.text.trim(),
+        passwordController.text.trim(),
+        userNameController.text.trim(),
+        mobileController.text.trim(),
+        nameController.text.trim(),
+      );
+
+      // Handle the successful creation
+      if (result != null) {
+        // Update UI or navigate to another screen
+        if (kDebugMode) {
+          print('User created successfully: $result');
+        }
+      } else {
+        setState(() {
+          errorMessage = 'Failed to create user. Please try again.';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        errorMessage = 'Error: $e';
+      });
     }
   }
+}
 
   @override
   void dispose() {
@@ -99,6 +115,18 @@ class _SignUpState extends State<SignUp> {
                     validate: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your Name';
+                      }
+                      return null;
+                    },
+                  ),
+                   TextFileds(
+                    controller: userNameController,
+                    label: 'User Name',
+                    obscure: false,
+                    input: TextInputType.text,
+                    validate: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your User  Name';
                       }
                       return null;
                     },
