@@ -109,24 +109,25 @@ class _SignUpState extends State<SignUp> {
                   const SizedBox(height: 10.0),
                   TextFileds(
                     controller: nameController,
-                    label: 'Name',
+                    label: 'First Name',
                     obscure: false,
                     input: TextInputType.text,
                     validate: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your Name';
+                        return 'Please enter your First Name';
                       }
                       return null;
                     },
                   ),
+                    const SizedBox(height: 10.0),
                    TextFileds(
                     controller: userNameController,
-                    label: 'User Name',
+                    label: 'Last Name',
                     obscure: false,
                     input: TextInputType.text,
                     validate: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your User  Name';
+                        return 'Please enter your Last  Name';
                       }
                       return null;
                     },
